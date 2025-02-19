@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,32 +23,38 @@ import { AuthService } from '../auth.service';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent{
-  loginFormGroup = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.minLength(8), Validators.required]),
-  })
+export class LoginComponent implements OnInit {
+
+  loginFormGroup: FormGroup = new FormGroup({});
 
   constructor(
     private authService: AuthService,
+    private router: Router
   ) { }
 
+  ngOnInit(): void {
+    this.loginFormGroup = new FormGroup({
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('', [Validators.required]),
+    })
+  }
 
-  onLogin() {
-    console.log(this.loginFormGroup.value);
-
-    //   this.authService.login(this.email, this.password).subscribe(
-    //     (response) => {
-    //       console.log('Login successful:', response);
-    //     },
-    //     (error) => {
-    //       console.error('Login failed:', error);
-    //     },
-    //   );
+  async onLogin() {
+    const { email, password } = this.loginFormGroup.value;
+  
+    this.authService.login( email, password).subscribe({
+      next: (res) => {
+        this.authService.setToken(res)
+        console.log(res);
+        this.authService.setToken(res)
+        this.router.navigate(['/dashboard'])
+      },
+      error: (err) => console.info(err)
+    });
   }
 }
