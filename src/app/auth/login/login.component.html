@@ -1,31 +1,38 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
+<div class="login-page">
+  <div class="left-site">
+    <h2>Acceder</h2>
     <form [formGroup]="loginFormGroup">
-      <mat-form-field>
-        <input
-          matInput
-          type="email"
-          placeholder="Email"
-          formControlName="email"
-          name="email"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-          name="password"
-        />
-      </mat-form-field>
+      <input
+        matInput
+        type="email"
+        placeholder="Correo"
+        formControlName="email"
+        name="email"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Contraseña"
+        formControlName="password"
+        name="password"
+      />
       <button mat-raised-button color="primary" (click)="onLogin()">
-        Login
+        Acceder
       </button>
+      <p>¿No tienes cuenta? <a href="/register">Regístrate</a></p>
     </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+  <div class="right-site">
+    <div class="top-rigth-site">
+      <h3>Hirify</h3>
+      <p><a href="/home">Volver al Web site</a></p>
+    </div>
+    <div class="img-login">
+      <img
+        src="images/finance-svg.svg"
+        alt="svg relacionado con la parte de finanzas"
+      />
+    </div>
+  </div>
+</div>

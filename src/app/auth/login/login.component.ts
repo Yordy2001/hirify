@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 // Material
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-login',
@@ -31,7 +30,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup = new FormGroup({});
-
+  
   constructor(
     private authService: AuthService,
     private router: Router
@@ -50,7 +49,6 @@ export class LoginComponent implements OnInit {
     this.authService.login( email, password).subscribe({
       next: (res) => {
         this.authService.setToken(res)
-        console.log(res);
         this.authService.setToken(res)
         this.router.navigate(['/dashboard'])
       },
