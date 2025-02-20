@@ -6,7 +6,7 @@ import { AppointmentsComponent } from './dashboard/appointments/appointments.com
 import { FinancialComponent } from './dashboard/financial/financial.component';
 import { InventoryComponent } from './dashboard/inventory/inventory.component';
 import { ServicesComponent } from './dashboard/services/services.component';
-import { NotfoundComponent } from './notfound/notfound.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
