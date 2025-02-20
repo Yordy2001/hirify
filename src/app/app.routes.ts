@@ -6,6 +6,7 @@ import { AppointmentsComponent } from './dashboard/appointments/appointments.com
 import { FinancialComponent } from './dashboard/financial/financial.component';
 import { InventoryComponent } from './dashboard/inventory/inventory.component';
 import { ServicesComponent } from './dashboard/services/services.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -18,4 +19,5 @@ export const routes: Routes = [
         { path: 'inventory', component: InventoryComponent },
         { path: 'financial', component: FinancialComponent },
     ]},
+    {path: '**', component: NotfoundComponent}
 ];
