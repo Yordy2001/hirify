@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from "ngx-cookie-service";
 
 import { environment } from '../../environments/environment';
+import { RegisterTenantDto } from '../dto/tenant.inteface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   api = environment.apiUrl;
   constructor(
     private http: HttpClient,
-    private cookies:CookieService,
+    private cookies: CookieService,
 
   ) { }
 
@@ -21,7 +22,13 @@ export class AuthService {
     return this.http.post(`${this.api}/auth/login`, { email, password }, { withCredentials: true });
   }
 
-  setToken(token: string){
+  register(registerTenantDto: RegisterTenantDto): Observable<any> {
+    console.log(registerTenantDto);
+    
+    return this.http.post(`${this.api}/tenant`, registerTenantDto, { withCredentials: true });
+  }
+
+  setToken(token: string) {
     this.cookies.set("token", token)
   }
 }

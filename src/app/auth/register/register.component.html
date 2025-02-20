@@ -1,1 +1,60 @@
-<p>register works!</p>
+<div class="login-page">
+  <div class="left-site">
+    <h2>Registrar empresa</h2>
+    <form [formGroup]="registerFormGroup">
+      <input
+        matInput
+        type="text"
+        placeholder="Espacio de trabajo"
+        formControlName="tenant"
+        name="tenant"
+        required
+      />
+
+      <input
+        matInput
+        type="text"
+        placeholder="Nombre empresa"
+        formControlName="nameEmpresa"
+        name="nameEmpresa"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Nombre Administrador"
+        formControlName="nameAdmin"
+        name="nameAdmin"
+      />
+      <input
+        matInput
+        type="email"
+        placeholder="Correo Administrador"
+        formControlName="email"
+        name="email"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Contraseña"
+        formControlName="password"
+        name="password"
+      />
+      <button mat-raised-button color="primary" (click)="register()">Registrar empresa</button>
+      <p>¿Tienes cuenta? <a href="/login">Login</a></p>
+    </form>
+  </div>
+  <div class="right-site">
+    <div class="top-rigth-site">
+      <h3>Hirify</h3>
+      <p><a href="/home">Volver al Web site</a></p>
+    </div>
+    <div class="img-login">
+      <img
+        src="public/images/finance-svg.svg"
+        alt="svg relacionado con la parte de finanzas"
+      />
+    </div>
+  </div>
+</div>
