@@ -1,0 +1,149 @@
+h3 {
+    color: #37474F;
+    font-size: xx-large;
+  }
+  
+  input {
+    padding: 1rem;
+    display: block;
+    width: 92%;
+    padding: 1em;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 25em;
+    padding: 1em;
+    text-align: center;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #547a94;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #37474f;
+  }
+  
+  p {
+    margin-top: 10px;
+    color: #37474f;
+  }
+  
+  a {
+    color: #96c2db;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .login-page {
+    width: 100%;
+    max-width: 100vw;
+    display: grid;
+    grid-template-columns: 40vw 60vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .left-site {
+    background-color: #e5edf1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2em;
+  }
+  
+  .right-site {
+    background-color: #547A94;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+  }
+  
+  .top-rigth-site {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+  }
+  
+  .img-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80%;
+  }
+  
+  /* Responsive para tablets */
+  @media (max-width: 1024px) {
+    .login-page {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+  
+    .left-site, .right-site {
+      width: 100%;
+      height: auto;
+      padding: 3em;
+    }
+  
+    .top-rigth-site {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
+  /* Responsive para móviles */
+  @media (max-width: 768px) {
+    .login-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: 2em 0;
+    }
+  
+    .left-site, .right-site {
+      width: 100%;
+      text-align: center;
+      padding: 2em;
+    }
+  
+    .top-rigth-site {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+  
+    form {
+      width: 100%;
+      max-width: 20em;
+    }
+  
+    .img-login img {
+      max-width: 60%;
+    }
+  }
+  
