@@ -15,8 +15,8 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     {
         path: 'dashboard', canActivate: [AuthGuard], children: [
-            { path: 'appointments', canActivate: [AuthGuard], component: AppointmentsComponent },
-            { path: 'clients',canActivate: [AuthGuard], component: ClientsComponent },
+            { path: 'appointments', component: AppointmentsComponent },
+            { path: 'clients', component: ClientsComponent },
             { path: 'services', component: ServicesComponent },
             { path: 'inventory', component: InventoryComponent },
             { path: 'financial', component: FinancialComponent },
