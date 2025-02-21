@@ -8,13 +8,17 @@ import { InventoryComponent } from './dashboard/inventory/inventory.component';
 import { ServicesComponent } from './dashboard/services/services.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     {
-        path: 'dashboard', canActivate: [AuthGuard], children: [
+        path: 'dashboard',
+        canActivate: [AuthGuard],
+        component: DashboardComponent,
+        children: [
             { path: 'appointments', component: AppointmentsComponent },
             { path: 'clients', component: ClientsComponent },
             { path: 'services', component: ServicesComponent },
