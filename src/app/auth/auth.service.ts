@@ -14,7 +14,7 @@ export class AuthService {
   api = environment.apiUrl;
   constructor(
     private http: HttpClient,
-    private cookies: CookieService,
+    private cookieService: CookieService,
 
   ) { }
 
@@ -28,7 +28,17 @@ export class AuthService {
     return this.http.post(`${this.api}/tenant`, registerTenantDto, { withCredentials: true });
   }
 
-  setToken(token: string) {
-    this.cookies.set("token", token)
+  isAutenticated(){
+    return this.cookieService.check('token')
   }
+
+  setToken(token: string) {
+    this.cookieService.set("token", token)
+  }
+
+  logOut(){
+    this.cookieService.delete('token');
+    window.location.href = '/login';
+  }
+
 }

@@ -29,7 +29,6 @@ export class RegisterComponent {
   }
 
   register() {
-
     const data = {
       name: this.registerFormGroup.value.nameEmpresa,
       logo: '',
