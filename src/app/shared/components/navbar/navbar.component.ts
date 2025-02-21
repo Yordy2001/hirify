@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,4 +11,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class NavbarComponent {
 
+  constructor(private authService:AuthService){}
+
+  logOut(){
+    this.authService.logOut()
+  }
 }
