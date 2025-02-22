@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+/* Áreas del Layout */
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.content {
+  grid-area: content;
+  padding: 20px;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #37474f;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #E5EDF1;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.chart {
+  background: #E5EDF1;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-areas:
+      "header header"
+      "sidebar sidebar"
+      "content content"
+      "footer footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  .sidebar {
+    text-align: center;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .container {
+    grid-template-areas:
+      "header"
+      "content"
+      "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .sidebar {
+    display: none; /* Ocultar sidebar en móviles */
+  }
+}

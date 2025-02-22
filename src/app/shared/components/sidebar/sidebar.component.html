@@ -1,1 +1,12 @@
-<p>sidebar works!</p>
+<aside class="sidebar">
+  <nav>
+    <ul>
+      <li><a href="/dashboard">Inicio</a></li>
+      <li><a (click)="navigateToChildrens('clients')">Clientes</a></li>
+      <li><a (click)="navigateToChildrens('services')">Servicios</a></li>
+      <li><a (click)="navigateToChildrens('appointments')">Empleados</a></li>
+      <li><a (click)="navigateToChildrens('inventory')">Inventario</a></li>
+      <li><a (click)="navigateToChildrens('financial')">Finanzas</a></li>
+    </ul>
+  </nav>
+</aside>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from "ngx-cookie-service";
 
 import { environment } from '../../environments/environment';
-import { RegisterTenantDto } from '../dto/tenant.inteface';
+import { RegisterTenantDto } from './dto/tenant.inteface';
 
 @Injectable({
   providedIn: 'root'
