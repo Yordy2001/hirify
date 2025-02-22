@@ -1,0 +1,19 @@
+.logo {
+  padding: 0.5rem;
+  margin: 0;
+  color: #37474F;
+}
+.navbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  background-color: #96C2DB;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+.navbar-button {
+    padding: 1rem;
+  }
+  
