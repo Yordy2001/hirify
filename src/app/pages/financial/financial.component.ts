@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { WorkingOnComponent } from "../../shared/components/working-on/working-on.component";
 
 @Component({
   selector: 'app-financial',
-  imports: [],
+  imports: [WorkingOnComponent],
   templateUrl: './financial.component.html',
   styleUrl: './financial.component.css'
 })
