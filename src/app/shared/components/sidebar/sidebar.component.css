@@ -1,9 +1,17 @@
 aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
   background: #e5edf1;
   padding: 10px 0;
-  height: 100%;
+
 }
 
+hr{
+  height: 2px;
+  color: #37474f;
+}
 .sidebar nav ul {
   list-style: none;
   padding: 0;
@@ -31,4 +39,24 @@ aside {
 .sidebar nav ul li:hover{
   cursor: pointer;
   background-color: #547A94;
+}
+
+.aside-close-session{
+  align-self: center;
+}
+
+.aside-close-session img{
+  width: 20px;
+}
+
+.aside-close-session button{
+  padding: 16px;
+  border: none;
+  outline: none;
+  background-color: #e5edf1;
+}
+
+.aside-close-session button:hover{
+  color: #37474f;
+  cursor: pointer;
 }
