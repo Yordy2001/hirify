@@ -1,12 +1,32 @@
-import { Component } from '@angular/core';
-import { WorkingOnComponent } from "../../shared/components/working-on/working-on.component";
+import { Component, OnInit } from '@angular/core';
+import { ClientsService } from './clients.service';
+import { Client } from './models/client.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-clients',
-  imports: [WorkingOnComponent],
+  imports: [CommonModule],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.css'
 })
-export class ClientsComponent {
+export class ClientsComponent implements OnInit {
 
+  clients: Client[] = []
+
+  constructor(
+    private readonly clientsService: ClientsService,
+  ) { }
+
+  ngOnInit() {
+    this.clientsService.get().subscribe(
+      (clients: Client[]) => {
+        this.clients.push(...clients)
+      },
+    );
+  }
+
+  // !Todo : Add fill table
+  // !Todo : NgOnChanges
+
+  
 }

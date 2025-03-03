@@ -36,7 +36,7 @@ export class AuthService {
     return this.cookieService.check('token')
   }
 
-  setToken(token: string) {
+  setToken(token: string) { 
     this.cookieService.set("token", token)
   }
 

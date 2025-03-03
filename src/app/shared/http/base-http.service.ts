@@ -10,7 +10,7 @@ export abstract class BaseHttpService {
     constructor(protected http: HttpClient) { }
 
     protected get<T>(url: string, options?: any): Observable<T> {
-        return this.http.get<T>(url, ...options);
+        return this.http.get<T>(url);
     }
 
     protected post<T>(url: string, body: any, options?: any): Observable<T> {
@@ -24,5 +24,4 @@ export abstract class BaseHttpService {
     protected delete<T>(url: string, options?: any): Observable<T> {
         return this.http.delete<T>(url, ...options);
     }
-
 }

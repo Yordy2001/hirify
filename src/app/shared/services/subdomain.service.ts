@@ -5,9 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class SubdomainService {
   getSubdomain(): string | null {
-    const host = window.location.host; // Ejemplo: "miapp.hirify.com"
+    const host = window.location.host; // example: "miapp.hirify.com"
     const hostSplit = host.split('.');
-    console.log("hostSplit", hostSplit);
     
     if (hostSplit.length > 2) {
       return hostSplit[0] // return "miapp"

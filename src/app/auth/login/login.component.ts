@@ -47,9 +47,8 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginFormGroup.value;
   
     this.authService.login( email, password).subscribe({
-      next: (res) => {
-        this.authService.setToken(res)
-        this.authService.setToken(res)
+      next: ({token}) => {
+        this.authService.setToken(token.token)
         this.router.navigate(['/dashboard'])
       },
       error: (err) => console.info(err)

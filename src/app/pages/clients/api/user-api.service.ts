@@ -10,14 +10,14 @@ import { environment } from '../../../../environments/environment';
 })
 export class UserApiService extends BaseHttpService {
 
-  baseUrl = environment.apiUrl;
+  private readonly baseUrl = environment.apiUrl;
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-  getClients(): Observable<Client> {
-    return this.get<Client>(`${this.baseUrl}/clients`);
+  getClients(): Observable<Client[]> {
+    return this.get<Client[]>(`${this.baseUrl}/clients`);
   }
 
   postClient(body: Partial<Client>, options?: any): Observable<Client> {
