@@ -1,0 +1,48 @@
+/* Fondo oscuro semitransparente cuando el modal está abierto */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Asegura que está por encima de otros elementos */
+  }
+  
+  /* Contenedor principal del modal */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Mayor que el backdrop */
+    min-width: 300px;
+    max-width: 80%;
+  }
+  
+  /* Encabezado del modal */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  /* Cuerpo del modal */
+  .modal-body {
+    margin-top: 10px;
+  }
+  
+  /* Botón de cerrar */
+  .modal-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
