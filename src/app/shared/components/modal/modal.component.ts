@@ -13,8 +13,7 @@ export class ModalComponent {
   content: WritableSignal<TemplateRef<any> | null> = signal(null);
 
   open(title: string, content: TemplateRef<any> | null ) {
-    console.log(content);
-    
+
     this.title.update(() => title);
     this.content.update(() => content);
     this.isOpen.update(() => true);

@@ -36,6 +36,7 @@
   /* Cuerpo del modal */
   .modal-body {
     margin-top: 10px;
+    width: auto;
   }
   
   /* Botón de cerrar */

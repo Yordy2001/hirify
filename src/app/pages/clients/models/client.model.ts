@@ -1,5 +1,8 @@
 export interface Client {
     id: string;
     name: string;
-    whatsapp: string;    
+    last_name: string;
+    whatsapp: string;
+    age: number;
+    gender: string;
 }

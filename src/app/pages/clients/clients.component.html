@@ -1,10 +1,11 @@
 <div class="content">
   <div class="content-heading">
     <h3>Clientes</h3>
-    <app-add-button page="{{page}}"></app-add-button>
+
+    <app-add-button (click)="openFormModal(formTemplate)"></app-add-button>
   </div>
 
-  <div class="table-content">
+  <div class="charts">
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input
@@ -15,23 +16,35 @@
       />
     </mat-form-field>
 
-    <table mat-table [dataSource]="clients" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
 
-      <!-- Weight Column -->
+      <!-- Last name Column -->
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.last_name }}</td>
+      </ng-container>
+
+      <!-- WhatsApp Column -->
       <ng-container matColumnDef="whatsapp">
         <th mat-header-cell *matHeaderCellDef>WhatsApp</th>
         <td mat-cell *matCellDef="let element">{{ element.whatsapp }}</td>
       </ng-container>
 
-      <!-- Symbol Column -->
+      <!-- Gender Column -->
       <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef>Gender</th>
-        <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+        <th mat-header-cell *matHeaderCellDef>Genero</th>
+        <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+      </ng-container>
+
+      <!-- Age Colum -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef>Edad</th>
+        <td mat-cell *matCellDef="let element">{{ element.age }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -46,3 +59,35 @@
     </table>
   </div>
 </div>
+
+<app-modal #modal></app-modal>
+
+<!-- Definir la plantilla del formulario -->
+<ng-template #formTemplate>
+  <form [formGroup]="clientFormGrup">
+    <label>Nombre *:</label>
+    <input type="text" formControlName="name" name="name" placeholder="Nombre" [ngClass]="{'error-border': hasError('name', 'required')}" />
+    <div *ngIf="hasError('name', 'required')" class="error-message">El nombre es requerido</div>
+    
+    <label>Apellido *:</label>
+    <input type="text" formControlName="lastName" name="lastName" placeholder="Apellido" [ngClass]="{'error-border': hasError('lastName', 'required')}" />
+    <div *ngIf="hasError('lastName', 'required')" class="error-message">El apellido es requerido</div>
+    
+    <label>WhatsApp *:</label>
+    <input type="text" formControlName="whatsapp" name="whatsapp" placeholder="WhatsApp" [ngClass]="{'error-border': hasError('whatsapp', 'required') || hasError('whatsapp', 'minlength')}" />
+    <div *ngIf="hasError('whatsapp', 'required')" class="error-message">El WhatsApp es requerido</div>
+    <div *ngIf="hasError('whatsapp', 'minlength')" class="error-message">El WhatsApp debe tener al menos 10 caracteres</div>
+    
+    <label>Género *:</label>
+    <input type="text" formControlName="gender" name="gender" placeholder="Género" [ngClass]="{'error-border': hasError('gender', 'required')}" />
+    <div *ngIf="hasError('gender', 'required')" class="error-message">El género es requerido</div>
+    
+    <label>Edad *:</label>
+    <input type="text" formControlName="age" name="age" placeholder="Edad" [ngClass]="{'error-border': hasError('age', 'required') || hasError('age', 'minlength') || hasError('age', 'maxlength')}" />
+    <div *ngIf="hasError('age', 'required')" class="error-message">La edad es requerida</div>
+    <div *ngIf="hasError('age', 'minlength')" class="error-message">La edad debe tener al menos 1 dígito</div>
+    <div *ngIf="hasError('age', 'maxlength')" class="error-message">La edad no puede tener más de 3 dígitos</div>
+    
+    <app-add-button (click)="postData()"> </app-add-button>
+  </form>
+</ng-template>
