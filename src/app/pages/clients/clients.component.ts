@@ -78,8 +78,9 @@ export class ClientsComponent implements OnInit, OnChanges {
   }
 
   postData() {
+    // todo: add alert after succes or error
     const data = this.clientFormGrup.value;
-
+ 
     if (!this.clientFormGrup.invalid) {
       this.clientsService.post(data, '').subscribe({
         next: () => {
@@ -94,6 +95,7 @@ export class ClientsComponent implements OnInit, OnChanges {
   }
 
   async editClient(id: any) {
+    // todo: add alert after update one
     const formValue = this.clientFormGrup.value;
 
     this.clientsService.put(id, formValue).subscribe({
@@ -112,9 +114,10 @@ export class ClientsComponent implements OnInit, OnChanges {
   }
 
   deleteClient({ id }: Client) {
-
+    // todo: change alert after delete client
+    // todo: add validate alert before delete client
     this.clientsService.delete(id).subscribe({
-      next: (res) => {
+      next: () => {
         alert('Client eliminado con exito');
         // GetData
         this.getData();
@@ -139,7 +142,7 @@ export class ClientsComponent implements OnInit, OnChanges {
       this.editClient(this.editingClient.id);
       return
     }
-
+ 
     this.postData();
     return
   }
