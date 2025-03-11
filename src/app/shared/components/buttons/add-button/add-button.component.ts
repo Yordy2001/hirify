@@ -9,4 +9,5 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AddButtonComponent {
   @Input() page:string = '';
+  @Input() action:string = 'Agregar';
 }

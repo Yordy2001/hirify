@@ -20,11 +20,11 @@ export class ClientsService {
     return this.http.postClient(body, options);
   }
 
-  put(body: Partial<Client>, options?: any): Observable<Client> {
-    return this.http.putClient(body, options)
+  put(id: string, body: Partial<Client>): Observable<Client> {
+    return this.http.putClient(id, body)
   }
 
-  delete(options?: any) {
-    return this.http.deleteClient(options);
+  delete(id:string) {
+    return this.http.deleteClient(id);
   }
 }

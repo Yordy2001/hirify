@@ -17,11 +17,11 @@ export abstract class BaseHttpService {
         return this.http.post<T>(url, body, ...options);
     }
 
-    protected put<T>(url: string, body: any, options?: any): Observable<T> {
-        return this.http.put<T>(url, body, ...options);
+    protected patch<T>(url: string, id: string, body: any): Observable<T> {
+        return this.http.patch<T>(url + '/' + id, body);
     }
 
-    protected delete<T>(url: string, options?: any): Observable<T> {
-        return this.http.delete<T>(url, ...options);
+    protected delete<T>(url: string, id: string): Observable<T> {
+        return this.http.delete<T>(url + '/' + id);
     }
 }

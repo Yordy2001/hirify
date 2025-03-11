@@ -24,12 +24,12 @@ export class UserApiService extends BaseHttpService {
     return this.post<Client>(`${this.baseUrl}/clients`, body, options);
   }
 
-  putClient(body: Partial<Client>, options?: any): Observable<Client> {
-    return this.put<Client>(`${this.baseUrl}/clients`, body, options);
+  putClient(id:string, body: Partial<Client>): Observable<Client> {
+    return this.patch<Client>(`${this.baseUrl}/clients`, id, body);
   }
 
-  deleteClient(options?: any): Observable<Client> {
-    return this.delete(`${this.baseUrl}/clients`, options)
+  deleteClient(id: any): Observable<any> {
+    return this.delete(`${this.baseUrl}/clients`, id)
   }
 
 }
