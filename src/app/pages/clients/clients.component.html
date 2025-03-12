@@ -125,7 +125,7 @@
       type="text"
       formControlName="gender"
       name="gender"
-      placeholder="Género"
+      placeholder="m | f"
       [ngClass]="{ 'error-border': hasError('gender', 'required') }"
     />
     <div *ngIf="hasError('gender', 'required')" class="error-message">
@@ -156,8 +156,8 @@
     </div>
 
     <app-add-button   
-      (click)="sendFormData()"
-      page="Cliente" [action]="editingClient ? 'Actualizar' : 'Agregar'">
+      (click)="onSubmit()"
+      page="Cliente" [action]="editingClient ? 'Editar' : 'Agregar'">
       
     </app-add-button>
   </form>
