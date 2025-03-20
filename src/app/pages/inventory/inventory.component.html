@@ -1,1 +1,143 @@
-<app-working-on></app-working-on>
+<div class="content">
+  <div class="content-heading">
+    <h3>{{page | titlecase }}</h3>
+
+    <app-add-button
+      (click)="openFormModal(formTemplate)"
+      page="{{ page }}"
+    ></app-add-button>
+  </div>
+
+  <div class="charts">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ex. ium"
+        #input
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">{{ element.price  | currency }}</td>
+      </ng-container>
+
+      <!-- quantity Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Stock</th>
+        <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+      </ng-container>
+     
+      <!-- quantity Column -->
+      <ng-container matColumnDef="min_stock">
+        <th mat-header-cell *matHeaderCellDef>Min Stock alert</th>
+        <td mat-cell *matCellDef="let element">{{ element.min_stock }}</td>
+      </ng-container>
+
+      <!-- actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="openFormModal(formTemplate, element)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<app-modal #modal></app-modal>
+
+<ng-template #formTemplate>
+  <form [formGroup]="invetoryForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del producto</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        placeholder="Ej: Crema de afeitar"
+      />
+      <mat-error *ngIf="invetoryForm.get('name')?.hasError('required')">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Precio</mat-label>
+      <input matInput formControlName="price" placeholder="Ej: 200" />
+      <mat-error *ngIf="invetoryForm.get('price')?.hasError('required')">
+        La duración es obligatoria.
+      </mat-error>
+      <mat-error *ngIf="invetoryForm.get('price')?.hasError('min')">
+        El precio debe ser mayor a 0.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cantidad</mat-label>
+      <input
+        matInput
+        type="quantity"
+        formControlName="quantity"
+        placeholder="Ej: 500"
+      />
+      <mat-error *ngIf="invetoryForm.get('quantity')?.hasError('required')">
+        El precio es obligatorio.
+      </mat-error>
+      <mat-error *ngIf="invetoryForm.get('quantity')?.hasError('min')">
+        El precio debe ser mayor a 0.
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>min. stock</mat-label>
+      <input
+        matInput
+        type="min_stock"
+        formControlName="min_stock"
+        placeholder="Ej: 5"
+      />
+      <mat-error *ngIf="invetoryForm.get('quantity')?.hasError('required')">
+        El min stock es obligatorio.
+      </mat-error>
+      <mat-error *ngIf="invetoryForm.get('quantity')?.hasError('min')">
+        El min stock debe ser mayor a 0.
+      </mat-error>
+    </mat-form-field>
+  
+  </form>
+  <app-add-button
+    (click)="onSubmit()"
+    page="{{ page }}"
+    [action]="editingProduct ? 'Editar' : 'Agregar'"
+  >
+  </app-add-button>
+</ng-template>

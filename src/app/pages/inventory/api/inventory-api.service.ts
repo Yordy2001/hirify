@@ -25,10 +25,10 @@ export class InvenotoryApiService extends BaseHttpService {
     }
 
     putInventory(id: string, body: Partial<Inventory>): Observable<Inventory> {
-        return this.patch<Inventory>(`${this.baseUrl}/Inventorys`, id, body);
+        return this.patch<Inventory>(`${this.baseUrl}/inventory`, id, body);
     }
 
     deleteInventory(id: any): Observable<any> {
-        return this.delete(`${this.baseUrl}/clients`, id)
+        return this.delete(`${this.baseUrl}/inventory`, id)
     }
 }
