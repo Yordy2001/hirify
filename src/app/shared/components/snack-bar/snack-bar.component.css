@@ -1,0 +1,44 @@
+.snackbar-container {
+  background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    padding: 16px;
+    /* border-radius: 8px; */
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+    color: white;
+  }
+  
+  .snackbar-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .snackbar-timer {
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: width linear;
+  }
+  
+  /* 📌 Colores personalizados según el tipo de mensaje */
+  .success {
+    background-color: #4caf50;
+    .snackbar-timer { background-color: #66bb6a; }
+  }
+  
+  .error {
+    background-color: #f44336;
+    .snackbar-timer { background-color: #e57373; }
+  }
+  
+  .warning {
+    background-color: #ffa000;
+    .snackbar-timer { background-color: #ffb74d; }
+  }
+  
+  .info {
+    background-color: #2196f3;
+    .snackbar-timer { background-color: #64b5f6; }
+  }
+  

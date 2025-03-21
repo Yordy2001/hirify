@@ -1,0 +1,7 @@
+<div class="snackbar-container {{ data.type }}">
+  <div class="snackbar-content">
+    <mat-icon>{{ data.icon }}</mat-icon>
+    <span>{{ data.message }}</span>
+  </div>
+  <div class="snackbar-timer" [style.width.%]="progress"></div>
+</div>
