@@ -33,6 +33,7 @@ aside {
   border: none;
   outline: none;
   background-color: #e5edf1;
+  margin-left: .8em;
 }
 
 .aside-close-session button:hover {
