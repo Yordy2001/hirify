@@ -1,17 +1,15 @@
 <aside class="sidebar">
-  <nav>
-    <ul>
-      <li><a href="/dashboard">Inicio</a></li>
-      <li><a (click)="navigateToChildrens('clients')">Clientes</a></li>
-      <li><a (click)="navigateToChildrens('services')">Servicios</a></li>
-      <li><a (click)="navigateToChildrens('appointments')">Empleados</a></li>
-      <li><a (click)="navigateToChildrens('inventory')">Inventario</a></li>
-      <li><a (click)="navigateToChildrens('financial')">Finanzas</a></li>
-    </ul>
-  </nav>
-    
-  <hr>
+  <div class="logo">
+    <h1>Hirify</h1>
+  </div>
+
+  <app-navbar class="navbar"></app-navbar>
+
   <div class="aside-close-session">
-    <button> <img src="images/close-session-icon.svg" alt="Cerrar sesion icon"> Cerrar sesion</button>
+    <button (click)="logOut()">
+      <span class="material-icons">
+        logout
+        </span>Cerrar sesion
+    </button>
   </div>
 </aside>
