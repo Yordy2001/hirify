@@ -1,1 +1,83 @@
-<app-working-on></app-working-on>
+<div class="content-heading">
+  <h3>{{ page }}</h3>
+  <app-add-button
+    (click)="openFormModal(formTemplate)"
+    [page]="page"
+  ></app-add-button>
+</div>
+
+<full-calendar [options]="calendarOptions"></full-calendar>
+
+<app-modal #modal></app-modal>
+
+<ng-template #formTemplate>
+  <form [formGroup]="appointmentForm" (ngSubmit)="submit()">
+    <!-- Seleccionar Cliente con Filtro por WhatsApp -->
+    <label for="client">Cliente (Filtrar por WhatsApp)</label>
+    <input
+      type="text"
+      id="client"
+      formControlName="client"
+      list="clientList"
+      required
+    />
+    <datalist id="clientList">
+      <option
+        *ngFor="let client of filteredClients$ | async; trackBy: trackByClient"
+        [value]="client.name"
+      >
+        {{ client.name }} - {{ client.whatsapp }}
+      </option>
+    </datalist>
+    <span *ngIf="appointmentForm.controls['client'].invalid">
+      Selecciona un cliente válido
+    </span>
+
+    <!-- Seleccionar Servicios -->
+    <label for="services">Servicios</label>
+    <select id="services" formControlName="services" multiple required>
+      <option
+        *ngFor="let service of services; trackBy: trackByService"
+        [value]="service.id"
+      >
+        {{ service.name }} - ${{ service.price }}
+      </option>
+    </select>
+    <span *ngIf="appointmentForm.controls['services'].invalid">
+      Selecciona al menos un servicio
+    </span>
+
+    <!-- Fecha de la Cita -->
+    <label for="date">Fecha</label>
+    <input
+      type="date"
+      id="date"
+      formControlName="date"
+      [min]="today"
+      required
+    />
+    <span *ngIf="appointmentForm.controls['date'].invalid">
+      Selecciona una fecha válida
+    </span>
+    <span *ngIf="appointmentForm.controls['date'].hasError('pastDate')">
+      No puedes seleccionar una fecha pasada.
+    </span>
+
+    <!-- Hora de la Cita -->
+    <label for="time">Hora</label>
+    <input type="time" id="time" formControlName="time" required />
+    <span *ngIf="appointmentForm.controls['time'].invalid">
+      Selecciona una hora válida
+    </span>
+    <span *ngIf="appointmentForm.controls['time'].hasError('invalidTime')">
+      Solo se permiten citas en la tarde (PM).
+    </span>
+
+    <!-- Botón de Enviar -->
+    <app-add-button
+      (click)="submit()"
+      [page]="page"
+      [action]="editingAppointment ? 'Editar' : 'Agregar'"
+    ></app-add-button>
+  </form>
+</ng-template>
