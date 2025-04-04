@@ -1,164 +1,158 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BehaviorSubject, debounceTime, map } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-
-import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { AddButtonComponent } from "../../shared/components/buttons/add-button/add-button.component";
-import { ModalComponent } from "../../shared/components/modal/modal.component";
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { AppointmentService } from './appointment.service';
 import { ClientsService } from '../clients/clients.service';
 import { BussinesService } from '../services/bussines-service.service';
-import { futureDateValidator, pmTimeValidator } from '../../shared/helpers/dateValidator';
-import timeGridPlugin from '@fullcalendar/timegrid';
+import { Appointment } from './models/appointment.model';
+import { Client } from '../clients/models/client.model';
+import { Service } from '../services/models/bussines-service.interface';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { AddButtonComponent } from "../../shared/components/buttons/add-button/add-button.component";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { SnackBarService } from '../../shared/components/snack-bar/snack-bar.service';
 
 @Component({
-  selector: 'app-appointments',
-  imports: [
-    CommonModule, FullCalendarModule, AddButtonComponent, ModalComponent,
-    MatFormFieldModule, MatSelectModule, MatOptionModule, MatDatepickerModule,
-    MatAutocompleteModule, ReactiveFormsModule
-  ],
-  providers: [provideNativeDateAdapter()],
+  standalone: true
+,  selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  styleUrl: './appointments.component.css'
+  styleUrls: ['./appointments.component.css'],
+  imports: [CommonModule, AddButtonComponent, MatIconModule, MatTableModule, MatButtonModule, MatInputModule, MatSelectModule, ReactiveFormsModule, MatStepperModule, MatCardModule, ModalComponent],
 })
 export class AppointmentsComponent implements OnInit {
-
   page = 'Reservas';
   @ViewChild('modal') modal!: ModalComponent;
-  @ViewChild('eventDetailTemplate') eventDetailTemplate!: TemplateRef<any>;
-  appointmentForm!: FormGroup;
-  filteredClients$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  clients: any[] = [];
-  services: any[] = [];
-  appointments: any[] = [];
-  editingAppointment: boolean = false;
-  today = new Date().toISOString().split('T')[0];
-  selectedEvent: any = null;
-  
-  calendarOptions: CalendarOptions = {
-    selectable: true,
-    height: 600,
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-    headerToolbar: {
-      right: 'prev,next today',
-      center: 'title',
-      left: 'dayGridMonth,timeGridWeek,timeGridDay'
-    },
-    dateClick: (info) => this.onDateClick(info),
-  };
+  @ViewChild('stepper') stepper!: MatStepper;
+
+  displayedColumns: string[] = ['id', 'date', 'status', 'actions'];
+  dataSource = new MatTableDataSource<Appointment>();
+
+  firstFormGroup!: FormGroup;
+  clients: Client[] = [];
+  filteredClients: Client[] = [];
+  selectedClients: Client[] = [];
+  services: Service[] = [];
+  selectedServices: any[] = [];
+  editingAppointment: Appointment | null = null;
 
   constructor(
     private fb: FormBuilder,
+    private appointmentService: AppointmentService,
     private clientService: ClientsService,
-    private bussinesService: BussinesService,
+    private businessService: BussinesService,
+    private snackbarService: SnackBarService,
   ) { }
 
   ngOnInit() {
+    this.getAppointments();
     this.initForm();
     this.loadClients();
     this.loadServices();
   }
 
   private initForm() {
-    this.appointmentForm = this.fb.group({
-      client: ['', Validators.required],
-      services: [[], Validators.required],
-      date: ['', Validators.required, futureDateValidator.bind(this)],
-      time: ['', Validators.required],
+    this.firstFormGroup = this.fb.group({
+      date: ['', Validators.required],
+      status: ['', Validators.required]
     });
-
-    // Filtrar clientes en tiempo real
-    this.appointmentForm.get('client')!.valueChanges.pipe(
-      debounceTime(300),
-      map(value => this.filterClients(value))
-    ).subscribe(filtered => this.filteredClients$.next(filtered));
   }
 
   private loadClients() {
     this.clientService.get().subscribe(clients => {
       this.clients = clients;
-      this.filteredClients$.next(clients);
+      this.filteredClients = [...clients];
     });
   }
 
   private loadServices() {
-    this.bussinesService.get().subscribe(services => {
+    this.businessService.get().subscribe(services => {
       this.services = services;
     });
   }
 
-  filterClients(searchText: string): any[] {
-    if (!searchText) return this.clients;
-    const filterValue = searchText.toLowerCase();
-    return this.clients.filter(client =>
-      client.whatsapp.toLowerCase().includes(filterValue) ||
-      client.name.toLowerCase().includes(filterValue)
-    );
+  getAppointments() {
+    this.appointmentService.get().subscribe((appointments: any) => {
+      this.dataSource.data = appointments.data;
+    });
   }
 
-  submit() {
-    if (this.appointmentForm.invalid) return;
-    console.log('Formulario enviado:', this.appointmentForm.value);
-    // !todo: Llamar servicio para crear la cita en el backend
+  deleteAppointment(appointmentId: string) {
+    if (!appointmentId) return;
+  
+    this.appointmentService.delete(appointmentId).subscribe({
+      next: () => {
+        this.snackbarService.showSnackbar('Cita eliminada con éxito', 'success');
+        this.getAppointments();
+      },
+      error: (error) => {
+        console.error('Error deleting appointment:', error);
+        this.snackbarService.showSnackbar('Error eliminando cita', 'error');
+      }
+    });
+  }
 
-    const formData = this.appointmentForm.value;
+  saveAppointment() {
+    if (this.firstFormGroup.invalid) return;
 
-    // Crear nuevo evento para el calendario
-    const newAppointment = {
-      title: this.getClientName(formData.client) + ' - ' + this.getServiceNames(formData.services),
-      start: formData.date + 'T' + formData.time,
-      allDay: false
+    const appointmentData = {
+      ...this.firstFormGroup.value,
+      clientId: this.selectedClients.map(client => client.id),
+      serviceId: this.selectedServices.map(service => service.id)
     };
 
-    // Agregar al listado de citas
-    this.appointments.push(newAppointment);
+    // If editing an appointment, update it instead of creating a new one
+    if (this.editingAppointment) {
+      this.appointmentService.put(this.editingAppointment.id, appointmentData).subscribe(() => {
+        this.getAppointments();
+      });
+    }
 
-    // Actualizar eventos en el calendario
-    this.calendarOptions = { ...this.calendarOptions, events: [...this.appointments] };
+    this.appointmentService.post(appointmentData, '').subscribe({
+      next: () => {
+        this.modal.close();
+        this.snackbarService.showSnackbar('Cita creada con éxito', 'success');
+        this.getAppointments();
+      },
+      error: (error) => {
+        this.modal.close();
+        console.error('Error creating appointment:', error);
+        this.snackbarService.showSnackbar('Error creando Appointmen', 'error');
+      },
+    });
 
-    this.modal.close();
   }
 
-  private onDateClick(info: any) {
-    // this.selectedEvent = info.event.extendedProps;
-    console.log(info);
-    
-    this.modal.open('Detalles de la Cita', this.eventDetailTemplate);
+  openFormModal(template: TemplateRef<any>, appointment?: Appointment) {
+    this.editingAppointment = appointment || null;
+    this.modal.open(appointment ? 'Editar cita' : 'Agregar cita', template);
   }
 
-  private getClientName(clientId: string): string {
-    
-    const client = this.clients.find(c => c.id === clientId);
-    return client ? client.name : 'Cliente desconocido';
+  filterClients(query: any) {
+    this.filteredClients = this.clients.filter(client => client.whatsapp.includes(query?.value));
   }
 
-  private getServiceNames(serviceIds: string[]): string {
-    return this.services
-      .filter(service => serviceIds.includes(service.id))
-      .map(service => service.name)
-      .join(', ');
+  filterServices(query: any) {
+    this.services = this.services.filter(service => service.name.toLowerCase().includes(query?.value.toLowerCase()));
   }
 
-  openFormModal(template: TemplateRef<any>) {
-    this.modal.open('Agregar cita', template);
+  toggleClientSelection(client: Client) {
+    const index = this.selectedClients.findIndex(c => c.id === client.id);
+    index === -1 ? this.selectedClients.push(client) : this.selectedClients.splice(index, 1);
   }
 
-  trackByClient(index: number, client: any) {
-    return client.id;
+  toggleServiceSelection(service: Service) {
+    const index = this.selectedServices.findIndex(s => s.id === service.id);
+    index === -1 ? this.selectedServices.push(service) : this.selectedServices.splice(index, 1);
   }
 
-  trackByService(index: number, service: any) {
-    return service.id;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 }
