@@ -19,8 +19,8 @@ import { CommonModule } from '@angular/common';
 import { SnackBarService } from '../../shared/components/snack-bar/snack-bar.service';
 
 @Component({
-  standalone: true
-,  selector: 'app-appointments',
+  standalone: true,
+  selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css'],
   imports: [CommonModule, AddButtonComponent, MatIconModule, MatTableModule, MatButtonModule, MatInputModule, MatSelectModule, ReactiveFormsModule, MatStepperModule, MatCardModule, ModalComponent],
@@ -84,7 +84,7 @@ export class AppointmentsComponent implements OnInit {
 
   deleteAppointment(appointmentId: string) {
     if (!appointmentId) return;
-  
+
     this.appointmentService.delete(appointmentId).subscribe({
       next: () => {
         this.snackbarService.showSnackbar('Cita eliminada con éxito', 'success');
@@ -97,7 +97,7 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 
-  saveAppointment() {
+  submit() {
     if (this.firstFormGroup.invalid) return;
 
     const appointmentData = {
@@ -110,14 +110,32 @@ export class AppointmentsComponent implements OnInit {
     if (this.editingAppointment) {
       this.appointmentService.put(this.editingAppointment.id, appointmentData).subscribe(() => {
         this.getAppointments();
+        this.firstFormGroup.reset()
       });
+      return
     }
+    return this.postData(appointmentData);
+  }
+
+  // !todo: add alert after update one
+   // !todo: fill the form with the selected appointment data
+  updateDate(event: any) {
+    const date = new Date(event.value).toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    this.firstFormGroup.patchValue({ date });
+  }
+
+  postData(appointmentData: any) {
+  
+    if (this.firstFormGroup.invalid) return;
 
     this.appointmentService.post(appointmentData, '').subscribe({
       next: () => {
         this.modal.close();
         this.snackbarService.showSnackbar('Cita creada con éxito', 'success');
         this.getAppointments();
+        this.firstFormGroup.reset();
+        this.selectedClients = [];
+        this.selectedServices = [];
       },
       error: (error) => {
         this.modal.close();
@@ -129,6 +147,15 @@ export class AppointmentsComponent implements OnInit {
   }
 
   openFormModal(template: TemplateRef<any>, appointment?: Appointment) {
+    if(appointment){   
+      this.firstFormGroup.patchValue({
+        date: new Date(appointment.date).getDate(),
+        status: appointment.status
+      });
+      // this.selectedClients = this.clients.filter(client => appointment.clientId.includes(client.id));
+      // this.selectedServices = this.services.filter(service => appointment.servicesId.includes(service.id));
+    }
+  
     this.editingAppointment = appointment || null;
     this.modal.open(appointment ? 'Editar cita' : 'Agregar cita', template);
   }
