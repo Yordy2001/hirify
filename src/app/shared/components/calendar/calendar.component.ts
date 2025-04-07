@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
@@ -25,11 +25,16 @@ import esLocale from '@fullcalendar/core/locales/es';
 })
 export class CalendarComponent {
 
+  @Input() events: any[] = [];
+  @Input() calendarHeight: number = 450;
+  @Input() calendarWidth: number = 1000;
+  @Input() plugins: any[] = [dayGridPlugin, timeGridPlugin, interactionPlugin];
+
   calendarOptions: CalendarOptions = {
     selectable: true,
-    height: 600,
+    height: 450,
     locale: esLocale,
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    plugins: this.plugins,
     headerToolbar: {
       right: 'prev,next today',
       center: 'title',
