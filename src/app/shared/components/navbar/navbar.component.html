@@ -6,6 +6,11 @@
       </a>
     </li>
     <li>
+      <a (click)="navigateToChildrens('invoice')" [class.active-link]="isActive('/dashboard/invoice')">
+        <span class="material-icons"> shopping_cart </span> Facturar
+      </a>
+    </li>
+    <li>
       <a (click)="navigateToChildrens('appointments')" [class.active-link]="isActive('/dashboard/appointments')">
         <span class="material-icons">event</span> Reservas
       </a>

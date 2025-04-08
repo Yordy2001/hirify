@@ -1,3 +1,10 @@
+.warn-icon-button {
+  color: #f44336;
+}
+
+.success-icon-button{
+  color: #4caf50;
+}
 table {
   width: 100%;
 }

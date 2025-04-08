@@ -41,13 +41,14 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let element">
         <button
-          mat-icon-button
-          color="primary"
+        mat-icon-button
+        color="success"
+        class="success-icon-button"
           (click)="openFormModal(formTemplate, element)"
         >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteService(element.id)">
+        <button mat-icon-button class="warn-icon-button" (click)="deleteService(element.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
