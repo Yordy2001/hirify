@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "../../shared/components/sidebar/sidebar.component";
 import { FooterComponent } from "../../shared/components/footer/footer.component";
+import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, NavbarComponent, SidebarComponent, FooterComponent],
+  imports: [RouterOutlet, SidebarComponent, FooterComponent, NavbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  currentRoute: string = '';
 
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.currentRoute = this.router.url;
+    });
+  }
 }

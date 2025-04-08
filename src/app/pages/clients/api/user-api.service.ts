@@ -31,5 +31,4 @@ export class UserApiService extends BaseHttpService {
   deleteClient(id: any): Observable<any> {
     return this.delete(`${this.baseUrl}/clients`, id)
   }
-
 }

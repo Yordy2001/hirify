@@ -34,23 +34,23 @@ export class ServicesComponent implements OnInit {
 
 
   constructor(
+    private formBuilder: FormBuilder,
     private bussinesService: BussinesService,
     private snackbarService: SnackBarService,
-    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
-    this.getServices();
+    this.getData();
 
     this.serviceForm = this.formBuilder.group({
-      id: [''.trim],
+      id: [''.trim()],
       name: ['', [Validators.required, Validators.minLength(3)]],
       duration: ['', [Validators.required, Validators.pattern('^[0-9]+min$')]],
       price: ['', [Validators.required, Validators.min(1)]],
     });
   }
 
-  getServices(): void {
+  getData(): void {
     this.bussinesService.get().subscribe({
       next: (data: Service[]) => {
         this.services = data;
@@ -66,14 +66,14 @@ export class ServicesComponent implements OnInit {
     this.bussinesService.post(data, '').subscribe({
       next: () => {
         this.modal.close()
-        this.getServices();
+        this.getData();
         this.serviceForm.reset();
         this.snackbarService.showSnackbar('Servicio agregado con éxito', 'success')
       },
       error: () => {
         this.modal.close()
         this.snackbarService.showSnackbar('Error al agregar Servicio', 'error');
-        this.getServices();
+        this.getData();
       },
     })
   }
@@ -81,7 +81,7 @@ export class ServicesComponent implements OnInit {
   putService(id: string, data: Service) {
     this.bussinesService.put(id, data).subscribe({
       next: () => {
-        this.getServices()
+        this.getData()
         this.modal.close();
         this.snackbarService.showSnackbar('Servicio Actualizado con éxito', 'success')
       },
@@ -96,7 +96,7 @@ export class ServicesComponent implements OnInit {
   deleteService(id: string) {
     this.bussinesService.delete(id).subscribe({
       next: () => {
-        this.getServices()
+        this.getData()
         this.snackbarService.showSnackbar('Servicio eliminado', 'success')
       },
       error: () => {

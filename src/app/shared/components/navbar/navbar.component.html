@@ -1,6 +1,35 @@
-<div class="navbar">
-    <h1 class="logo">Hirify</h1>
-    <div class="navbar-button">
-        <button (click)="logOut()">Salir</button>
-    </div>
-</div>
+<nav>
+  <ul>
+    <li>
+      <a (click)="navigateToChildrens()" [class.active-link]="isActive('/dashboard')">
+        <span class="material-icons">home</span> Inicio
+      </a>
+    </li>
+    <li>
+      <a (click)="navigateToChildrens('appointments')" [class.active-link]="isActive('/dashboard/appointments')">
+        <span class="material-icons">event</span> Reservas
+      </a>
+    </li>
+    <li>
+      <a (click)="navigateToChildrens('clients')" [class.active-link]="isActive('/dashboard/clients')">
+        <span class="material-icons">group</span> Clientes
+      </a>
+    </li>
+    
+    <li>
+      <a (click)="navigateToChildrens('services')" [class.active-link]="isActive('/dashboard/services')">
+        <span class="material-icons">build</span> Servicios
+      </a>
+    </li>
+    <li>
+      <a (click)="navigateToChildrens('inventory')" [class.active-link]="isActive('/dashboard/inventory')">
+        <span class="material-icons">store</span> Inventario
+      </a>
+    </li>
+    <!-- <li>
+      <a (click)="navigateToChildrens('financial')" [class.active-link]="isActive('/dashboard/financial')">
+        <span class="material-icons">attach_money</span> Finanzas
+      </a>
+    </li> -->
+  </ul>
+</nav>

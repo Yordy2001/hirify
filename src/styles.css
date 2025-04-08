@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.material-icons {
+  vertical-align: middle; /* Alinea el ícono con el texto */
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+  font-size: 24px; /* Tamaño del ícono */
+}
