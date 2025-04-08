@@ -1,0 +1,37 @@
+<div class="content">
+  <div class="cards">
+    <div class="card card-clients">
+      <div class="card-body">
+        <p class="card-title">Clientes</p>
+        <p>{{ totalClients }}</p>
+        <!-- <img src="/images/client-icon.svg" alt=""> -->
+      </div>
+      <div class="clients-footer">
+        <a href="/dashboard/clients">Más info➡️</a>
+      </div>
+    </div>
+
+    <div class="card card-services">
+      <div class="card-body">
+        <p class="card-title">Servicios</p>
+        <p>{{ totalServices }}</p>
+        <!-- <img src="/public//images/finance-icon.svg" alt=""> -->
+      </div>
+      <div class="services-foother">
+        <a href="/dashboard/services">Más info➡️</a>
+      </div>
+    </div>
+
+    <div class="card card-appointments">
+      <div class="card-body">
+        <p class="card-title">Reservaciones</p>
+        <p>{{ totalAppointments }}</p>
+        <!-- <img src="/public//images/calendar-icon.svg" alt=""> -->
+      </div>
+      <footer class="appointments-footer">
+        <a href="/dashboard/appointments">Más info➡️</a>
+      </footer>
+    </div>
+  </div>
+  <app-calendar [plugins]="calendarPlugins"></app-calendar>
+</div>

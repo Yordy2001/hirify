@@ -9,6 +9,7 @@ import { ServicesComponent } from './pages/services/services.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         component: DashboardComponent,
         children: [
+            { path: '', component: HomeComponent },
             { path: 'appointments', component: AppointmentsComponent },
             { path: 'clients', component: ClientsComponent },
             { path: 'services', component: ServicesComponent },
