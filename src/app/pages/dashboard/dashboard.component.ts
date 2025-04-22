@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "../../shared/components/sidebar/sidebar.component";
 import { FooterComponent } from "../../shared/components/footer/footer.component";
-import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, SidebarComponent, FooterComponent, NavbarComponent],
+  imports: [RouterOutlet, SidebarComponent, FooterComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

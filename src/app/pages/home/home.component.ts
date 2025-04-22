@@ -39,8 +39,6 @@ export class HomeComponent implements OnInit {
 
   getTotalAppointments() {
     this.__appointmentService.get().subscribe((res: any) => {
-      console.log(res);
-      
       this.totalAppointments = res.data.length;
     });
   }

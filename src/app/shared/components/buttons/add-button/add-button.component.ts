@@ -10,4 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class AddButtonComponent {
   @Input() page:string = '';
   @Input() action:string = 'Agregar';
+  @Input() icon:string = 'add_circle_outline';
+  @Input() color:string = 'primary';
 }

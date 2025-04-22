@@ -30,7 +30,6 @@ import { MatButtonModule } from '@angular/material/button';
 export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup = new FormGroup({});
-  
   constructor(
     private authService: AuthService,
     private router: Router

@@ -51,11 +51,12 @@
           <button
             mat-icon-button
             color="primary"
+            class="success-icon-button"
             (click)="openFormModal(formTemplate, element)"
           >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteData(element)">
+          <button mat-icon-button color="warn" class="warn-icon-button" (click)="deleteData(element)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CookieService } from "ngx-cookie-service";
+import { jwtDecode } from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
 import { RegisterTenantDto } from './dto/tenant.inteface';
@@ -13,7 +14,12 @@ import { SubdomainService } from '../shared/services/subdomain.service';
 
 export class AuthService {
   api = environment.apiUrl;
+  private readonly tokenKey = 'token'
+  private readonly userSubject = new BehaviorSubject<any>(null)
 
+  // Observable expuesto para los componentes
+  readonly user$ = this.userSubject.asObservable()
+  
   constructor(
     private http: HttpClient,
     private readonly cookieService: CookieService,
@@ -37,11 +43,30 @@ export class AuthService {
   }
 
   setToken(token: string) { 
-    this.cookieService.set("token", token)
+    this.cookieService.set(this.tokenKey, token);
+    this.decodeAndSetUser(token);
+  }
+
+  decodeAndSetUser(token?: string): void {
+    const jwt = token || this.cookieService.get(this.tokenKey);
+    if (!jwt) return;
+
+    try {
+      const user = jwtDecode<any>(jwt);
+      this.userSubject.next(user);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+    }
+  }
+
+  getCurrentUser(): any | null {
+    return this.userSubject.value;
   }
 
   logOut() {
     this.cookieService.delete('token');
+    this.userSubject.next(null);
     window.location.href = '/login';
   }
 }
+

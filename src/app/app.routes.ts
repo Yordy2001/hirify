@@ -10,6 +10,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
+import { InvoiceComponent } from './pages/invoice/invoice.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
         component: DashboardComponent,
         children: [
             { path: '', component: HomeComponent },
+            { path: 'invoice', component: InvoiceComponent },
             { path: 'appointments', component: AppointmentsComponent },
             { path: 'clients', component: ClientsComponent },
             { path: 'services', component: ServicesComponent },
