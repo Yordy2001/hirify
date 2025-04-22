@@ -82,7 +82,7 @@ export class InvoiceComponent implements OnInit, OnChanges {
       client: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       employ: [{ value: this.employ$, disabled: true }],
       date: [{ value: new Date().toLocaleDateString(), disabled: true }],
-      servicio: ['', Validators.required],
+      servicio: ['',],
       payment_method: ['efectivo', Validators.required],
       pago: [, [Validators.required, Validators.min(this.total)]],
       cambio: [{ value: 0, disabled: true }],

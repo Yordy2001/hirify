@@ -48,6 +48,7 @@
             {{ servicio.name }} - ${{ servicio.price }}
           </mat-option>
         </mat-autocomplete>
+        <mat-error *ngIf="service?.hasError('required')">Debe agregar uno o más servicios a la factura</mat-error>
       </mat-form-field>
       
       <button mat-icon-button color="primary" (click)="addItem()" type="button">
