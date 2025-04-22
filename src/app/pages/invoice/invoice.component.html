@@ -1,17 +1,118 @@
-
 <div class="content">
+  <form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+    <div class="form-group-data">
+      
+      <!-- Client -->
+      <mat-form-field appearance="outline">
+        <mat-label>Tel. Cliente</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="client"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onClientSelected($event)">
+          <mat-option *ngFor="let option of filteredClients$ | async" [value]="option.phone">
+            {{ option.name }} - {{ option.phone }}
+          </mat-option>
+        </mat-autocomplete>
+      
+        <mat-error *ngIf="client.hasError('required')">Campo requerido</mat-error>
+        <mat-error *ngIf="client.hasError('notRegistered')">Número no registrado</mat-error>
+        <mat-error *ngIf="client.hasError('pattern')">Teléfono inválido</mat-error>
+      </mat-form-field>
 
-    <form>
+      <!-- Vendedor -->
+      <mat-form-field appearance="outline">
+        <mat-label>Vendedor</mat-label>
+        <input matInput formControlName="employ" [disabled]="true" />
+      </mat-form-field>
+  
+      <!-- Fecha -->
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input matInput formControlName="date" [disabled]="true" />
+      </mat-form-field>
+  
+      <!-- Servicios con botón ➕ -->
+      <mat-form-field class="full-width" appearance="outline">
+        <input
+          type="text"
+          matInput
+          placeholder="Servicio"
+          formControlName="servicio"
+          [matAutocomplete]="autoServicios"
+        />
+        <mat-autocomplete #autoServicios="matAutocomplete">
+          <mat-option *ngFor="let servicio of filteredServicios$ | async" [value]="servicio.name">
+            {{ servicio.name }} - ${{ servicio.price }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      
+      <button mat-icon-button color="primary" (click)="addItem()" type="button">
+        <mat-icon>add</mat-icon>
+        <mat-label>Agregar servicio</mat-label>
+      </button>
+  
+      <!-- Método de pago -->
+      <mat-form-field appearance="outline">
+        <mat-label>Método de pago</mat-label>
+        <mat-select formControlName="payment_method">
+          <mat-option value="efectivo">Efectivo</mat-option>
+          <mat-option value="tarjeta" disabled>Tarjeta</mat-option>
+          <mat-option value="transferencia" disabled>Transferencia</mat-option>
+          <mat-option value="cheque" disabled>Cheque</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- Pago -->
+      <mat-form-field appearance="outline">
+        <mat-label>Pago</mat-label>
+        <input matInput type="number" formControlName="pago" />
+        <mat-error *ngIf="pago?.hasError('required')">Campo requerido</mat-error>
+        <mat-error *ngIf="pago?.hasError('min')">No puede ser menor que el monto total - <strong>{{total}}</strong></mat-error>
+      </mat-form-field>
+  
+      <!-- Devuelta / Cambio -->
+      <mat-form-field appearance="outline" >
+        <mat-label>Devuelta/Cambio</mat-label>
+        <input matInput type="number" formControlName="cambio" [disabled]="true" />
+      </mat-form-field>
+  
+    </div>
+  </form>
+  
 
-        <label for="client">Cliente</label>
-        <input type="text" id="client" name="client" required>
+  <app-add-button class="btn-registrar-venta btn-action" action="Registrar venta" (click)="onSubmit()"></app-add-button>
+  <app-add-button class="btn-action" action="Vaciar Listado" (click)="cleanTable()"></app-add-button>
+  <app-add-button class="btn-action" action="Cancelar venta"></app-add-button>
 
-        <label for="employ">Vendedor</label>
-        <input type="text" id="employ" name="employ" required>
-
-        <label for="date">Fecha</label>
-        <input type="date" id="date" name="date" required>
-
-    </form>
-
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Servicio</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoiceItems; let i = index">
+        <td>{{i}}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.unitPrice }}</td>
+        <td>
+          <button (click)="removeItem(item)">🗑️</button>
+          <!-- <button>🛒</button> -->
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Total</td>w
+        <td>{{ total }}</td>
+      </tr>
+    </tfoot>
+  </table>
 </div>

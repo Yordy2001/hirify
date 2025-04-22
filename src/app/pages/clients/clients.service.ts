@@ -27,4 +27,12 @@ export class ClientsService {
   delete(id:string) {
     return this.http.deleteClient(id);
   }
+
+  checkNumeroRegistrado(telefono: string) {
+    // return this.http.get<{ registrado: boolean }>(`/api/clientes/registrado/${telefono}`)
+    //   .pipe(
+    //     map(res => res.registrado),
+    //     catchError(() => of(false))
+    //   );
+  }
 }
