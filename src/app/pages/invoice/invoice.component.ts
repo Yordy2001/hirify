@@ -57,7 +57,7 @@ export class InvoiceComponent implements OnInit, OnChanges {
     private servicesService: BussinesService,
     private snackbarService: SnackBarService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.decodeAndSetUser(); // Placeholder for the employee name
@@ -166,7 +166,7 @@ export class InvoiceComponent implements OnInit, OnChanges {
       return;
     }
 
-    if(this.facturaForm.get('pago')?.value < this.total) {
+    if (this.facturaForm.get('pago')?.value < this.total) {
       this.facturaForm.get('pago')?.setErrors({ min: true });
       return;
     }
@@ -232,6 +232,24 @@ export class InvoiceComponent implements OnInit, OnChanges {
 
   onClientSelected(phone: any): void {
     this.selectedClient = this.clients.find(c => c.phone === phone);
+  } 
+  
+  onClientBlur() {
+    const control = this.client;
+    const phone = control.value;
+    if (!phone) {
+      return;
+    }
+
+    const existe = this.clients.some(c => c.phone === phone);
+    if (!existe) {
+      control.setErrors({ notRegistered: true });
+    } 
+    else {
+      if (control.hasError('notRegistered')) {
+        control.setErrors(null);
+      }
+    }
   }
 
   private _filterClients(value: string): { name: string; phone: string }[] {

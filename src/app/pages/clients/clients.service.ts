@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserApiService } from './api/user-api.service';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { Client } from './models/client.model';
 
 @Injectable({
@@ -28,11 +28,11 @@ export class ClientsService {
     return this.http.deleteClient(id);
   }
 
-  checkNumeroRegistrado(telefono: string) {
-    // return this.http.get<{ registrado: boolean }>(`/api/clientes/registrado/${telefono}`)
-    //   .pipe(
-    //     map(res => res.registrado),
-    //     catchError(() => of(false))
-    //   );
+  checkNumeroRegistrado(tel: string) {
+    return this.http.verify(`/api/clientes/registrado/${tel}`)
+      .pipe(
+        map(res => res.registrado),
+        catchError(() => of(false))
+      );
   }
 }

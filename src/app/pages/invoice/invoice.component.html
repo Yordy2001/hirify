@@ -10,6 +10,7 @@
           matInput
           formControlName="client"
           [matAutocomplete]="auto"
+          (blur)="onClientBlur()"
         />
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onClientSelected($event)">
           <mat-option *ngFor="let option of filteredClients$ | async" [value]="option.phone">
@@ -18,7 +19,7 @@
         </mat-autocomplete>
       
         <mat-error *ngIf="client.hasError('required')">Campo requerido</mat-error>
-        <mat-error *ngIf="client.hasError('notRegistered')">Número no registrado</mat-error>
+        <mat-error *ngIf="client.hasError('notRegistered')">Número no registrado. <a href="/dashboard/clientform">click</a>  registrar</mat-error>
         <mat-error *ngIf="client.hasError('pattern')">Teléfono inválido</mat-error>
       </mat-form-field>
 
